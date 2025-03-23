@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: know_flow_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    ports:
+      - "${PG_PORT}:5432"
+    volumes:
+      - ./docker/postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend_network
+
+  know_flow_back:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: know_flow_back
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
