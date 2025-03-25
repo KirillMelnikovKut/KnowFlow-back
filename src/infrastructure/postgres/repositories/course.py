@@ -1,0 +1,40 @@
+from sqlalchemy.orm import Session
+
+from src.application.schemas.course import CourseCreate, BlockCreate, QuestionCreate, AnswerOptionCreate
+from src.infrastructure.postgres.models.course import Course, AnswerOption, Question, Block
+
+
+class CourseRepository:
+    def create_course(self, course_data: CourseCreate, db_session: Session) -> Course:
+        course = Course(**course_data.dict())
+        db_session.add(course)
+        db_session.commit()
+        db_session.refresh(course)
+        return course
+
+    def get_course_by_id(self, course_id: int, db_session: Session) -> Course:
+        return db_session.query(Course).filter(Course.id == course_id).first()
+
+class BlockRepository:
+    def create_block(self, block_data: BlockCreate, db_session: Session) -> Block:
+        block = Block(**block_data.dict())
+        db_session.add(block)
+        db_session.commit()
+        db_session.refresh(block)
+        return block
+
+class QuestionRepository:
+    def create_question(self, question_data: QuestionCreate, db_session: Session) -> Question:
+        question = Question(**question_data.dict())
+        db_session.add(question)
+        db_session.commit()
+        db_session.refresh(question)
+        return question
+
+class AnswerOptionRepository:
+    def create_answer_option(self, answer_data: AnswerOptionCreate, db_session: Session) -> AnswerOption:
+        answer = AnswerOption(**answer_data.dict())
+        db_session.add(answer)
+        db_session.commit()
+        db_session.refresh(answer)
+        return answer
