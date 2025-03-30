@@ -1,10 +1,11 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 from datetime import datetime
 
 class CourseCreate(BaseModel):
     title: str
     description: str
+    video: Optional[str] = None
 
 class BlockCreate(BaseModel):
     title: str
@@ -22,27 +23,27 @@ class AnswerOptionCreate(BaseModel):
     is_correct: bool
     question_id: int
 
-class CourseResponse(BaseModel):
+class AnswerOptionResponse(BaseModel):
     id: int
-    title: str
-    description: str
-    created_at: datetime
+    text: str
+    is_correct: bool
+
+class QuestionResponse(BaseModel):
+    id: int
+    text: str
+    order: int
+    answer_options: List[AnswerOptionResponse]
 
 class BlockResponse(BaseModel):
     id: int
     title: str
     content: str
     order: int
-    course_id: int
+    questions: List[QuestionResponse]
 
-class QuestionResponse(BaseModel):
+class CourseResponse(BaseModel):
     id: int
-    text: str
-    order: int
-    block_id: int
-
-class AnswerOptionResponse(BaseModel):
-    id: int
-    text: str
-    is_correct: bool
-    question_id: int
+    title: str
+    description: str
+    video: Optional[str] = None
+    blocks: List[BlockResponse]
