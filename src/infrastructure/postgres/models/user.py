@@ -1,4 +1,6 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
+
 from src.infrastructure.postgres.client import Base
 
 
@@ -9,3 +11,4 @@ class User(Base):
     password = Column(String, nullable=False)
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
+    user_blocks = relationship("UserBlocks", back_populates="user")

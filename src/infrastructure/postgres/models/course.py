@@ -29,6 +29,7 @@ class Block(Base):
 
     # Связь с вопросами (один ко многим)
     questions = relationship("Question", back_populates="block", cascade="all, delete-orphan")
+    user_blocks = relationship("UserBlocks", back_populates="block")
 
 
 class Question(Base):

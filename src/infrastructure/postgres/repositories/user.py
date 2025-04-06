@@ -6,6 +6,12 @@ from src.core.security import auth_service
 
 
 class UserRepository:
+    def get_user(self, user_id: int, db: Session):
+        user = db.query(User).filter_by(id=user_id).first()
+        if user is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+        return user
+
     def create_user(self, user_data: UserLogin, db: Session):
         existing_user = db.query(User).filter_by(email=user_data.email).first()
         if existing_user:

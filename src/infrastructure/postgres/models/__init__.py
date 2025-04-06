@@ -1,2 +1,1 @@
-from . import user
-from . import course
+from . import user, course, user_blocks
