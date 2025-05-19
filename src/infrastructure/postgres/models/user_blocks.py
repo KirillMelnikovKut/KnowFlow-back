@@ -7,9 +7,9 @@ class UserBlocks(Base):
     __tablename__ = "user_blocks"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, nullable=False)
-    block_id = Column(Integer, nullable=False) # Текстовый контент блока
-    statistics = Column(Float, nullable=False)  # Связь с курсом
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)  # Связь с пользователем
+    block_id = Column(Integer, ForeignKey("blocks.id"), nullable=False)  # Связь с блоком
+    statistics = Column(Float, nullable=False)  # Статистика для конкретного пользователя и блока
 
     # Связь с пользователем (многие к одному)
     user = relationship("User", back_populates="user_blocks")

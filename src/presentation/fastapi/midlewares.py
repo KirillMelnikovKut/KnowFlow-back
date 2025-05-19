@@ -24,7 +24,6 @@ async def get_current_user(
 
     try:
         user_id = auth_service.verify_token(token)
-
         user = user_repository.get_user(user_id, db_session)
         return user
 
